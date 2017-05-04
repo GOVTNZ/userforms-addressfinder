@@ -16,7 +16,7 @@ class NZAddressFinderProvider implements AddressFinderProvider {
         $field->addExtraClass('addressfinder-nz');
         $field->setAttribute('data-key', $key);
 
-        Requirements::javascript('http://api.addressfinder.io/assets/v3/widget.js');
+        Requirements::javascript('https://api.addressfinder.io/assets/v3/widget.js');
         Requirements::javascript(USERFORMS_ADDRESSFINDER_DIR . '/javascript/nz-addressfinder-provider.js');
     }
 
