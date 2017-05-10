@@ -32,7 +32,8 @@ class AddressFinderField extends EditableFormField {
             $this->Default)
             ->setFieldHolderTemplate('UserFormsField_holder')
             ->setTemplate('UserFormsField')
-            ;
+            ->setAttribute('placeholder', 'Start typing an address...');
+
         $this->doUpdateFormField($field);
 
         // initialize the encapsulated addressprovider for this field.
