@@ -37,6 +37,16 @@ class AddressFinderField extends EditableFormField {
         $this->doUpdateFormField($field);
 
         // initialize the encapsulated addressprovider for this field.
+        // If there's no provider set, use the first
+        if (is_null($this->Provider)) {
+            foreach (get_declared_classes() as $class) {
+                if (is_subclass_of($class, "AddressFinderProvider")) {
+                    $this->Provider = $class;
+                    break;
+                }
+            }
+        }
+
         $provider = new $this->Provider;
         $provider->init($field);
 
