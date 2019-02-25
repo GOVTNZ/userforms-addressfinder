@@ -1,2 +1,3 @@
-# userforms-addressfinder
+# SilverStripe UserForms AddressFinder
+
 Adds an addressfinder field to silverstripe/userforms

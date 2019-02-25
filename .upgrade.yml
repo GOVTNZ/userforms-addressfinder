@@ -1,0 +1,4 @@
+mappings:
+  AddressFinderProvider: GovtNZ\SilverStripe\UserForms\code\providers\AddressFinderProvider
+  NZAddressFinderProvider: GovtNZ\SilverStripe\UserForms\code\providers\NZAddressFinderProvider
+  AddressFinderField: GovtNZ\SilverStripe\UserForms\code\fields\AddressFinderField

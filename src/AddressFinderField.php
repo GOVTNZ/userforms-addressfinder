@@ -1,6 +1,13 @@
 <?php
 
-class AddressFinderField extends EditableFormField {
+namespace GovtNZ\SilverStripe\UserForms;
+
+use SilverStripe\UserForms\Model\EditableFormField;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\TextField;
+
+class AddressFinderField extends EditableFormField
+{
 
     private static $singular_name = 'AddressFinder Field';
 
@@ -10,6 +17,9 @@ class AddressFinderField extends EditableFormField {
         "Provider" => "Varchar"
     );
 
+    /**
+     * {@inheritDoc}
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -19,7 +29,9 @@ class AddressFinderField extends EditableFormField {
             new ListboxField(
                 "Provider",
                 "Address provider",
-                $this->getSubclassesOf("AddressFinderProvider")));
+                $this->getSubclassesOf(AddressFinderProvider::class)
+            )
+        );
 
         return $fields;
     }
@@ -29,7 +41,8 @@ class AddressFinderField extends EditableFormField {
         $field = TextField::create(
             $this->Name,
             $this->EscapedTitle,
-            $this->Default)
+            $this->Default
+        )
             ->setFieldHolderTemplate('UserFormsAddressfinderField_holder')
             ->setTemplate('UserFormsField')
             ->setAttribute('placeholder', 'Start typing an address...');
@@ -40,7 +53,7 @@ class AddressFinderField extends EditableFormField {
         // If there's no provider set, use the first
         if (is_null($this->Provider)) {
             foreach (get_declared_classes() as $class) {
-                if (is_subclass_of($class, "AddressFinderProvider")) {
+                if (is_subclass_of($class, AddressFinderProvider::class)) {
                     $this->Provider = $class;
                     break;
                 }
@@ -57,8 +70,9 @@ class AddressFinderField extends EditableFormField {
     {
         $result = array();
         foreach (get_declared_classes() as $class) {
-            if (is_subclass_of($class, $parent))
+            if (is_subclass_of($class, $parent)) {
                 $result[$class] = $class::getTitle();
+            }
         }
         return $result;
     }
