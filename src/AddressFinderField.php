@@ -17,6 +17,8 @@ class AddressFinderField extends EditableFormField
         "Provider" => "Varchar"
     );
 
+    private static $table_name = 'AddressFinderField';
+
     /**
      * {@inheritDoc}
      */
