@@ -5,6 +5,7 @@ namespace GovtNZ\SilverStripe\UserForms;
 use SilverStripe\UserForms\Model\EditableFormField;
 use SilverStripe\Forms\ListboxField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Core\ClassInfo;
 
 class AddressFinderField extends EditableFormField
 {
@@ -14,7 +15,7 @@ class AddressFinderField extends EditableFormField
     private static $plural_name = 'AddressFinder Fields';
 
     private static $db = array(
-        "Provider" => "Varchar"
+        "Provider" => "Varchar(200)"
     );
 
     private static $table_name = 'AddressFinderField';
@@ -31,7 +32,7 @@ class AddressFinderField extends EditableFormField
             new ListboxField(
                 "Provider",
                 "Address provider",
-                $this->getSubclassesOf(AddressFinderProvider::class)
+                ClassInfo::implementorsOf(AddressFinderProvider::class)
             )
         );
 
@@ -51,31 +52,15 @@ class AddressFinderField extends EditableFormField
 
         $this->doUpdateFormField($field);
 
-        // initialize the encapsulated addressprovider for this field.
-        // If there's no provider set, use the first
-        if (is_null($this->Provider)) {
-            foreach (get_declared_classes() as $class) {
-                if (is_subclass_of($class, AddressFinderProvider::class)) {
-                    $this->Provider = $class;
-                    break;
-                }
-            }
+        if (!$this->Provider || !class_exists($this->Provider)) {
+            $providers = ClassInfo::implementorsOf(AddressFinderProvider::class);
+
+            $this->Provider = array_shift($providers);
         }
 
         $provider = new $this->Provider;
         $provider->init($field);
 
         return $field;
-    }
-
-    protected function getSubclassesOf($parent)
-    {
-        $result = array();
-        foreach (get_declared_classes() as $class) {
-            if (is_subclass_of($class, $parent)) {
-                $result[$class] = $class::getTitle();
-            }
-        }
-        return $result;
     }
 }
