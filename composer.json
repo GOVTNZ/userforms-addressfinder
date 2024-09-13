@@ -8,8 +8,8 @@
         "email": "juan@vdanker.net"
     }],
     "require": {
-        "silverstripe/framework": "^4",
-        "silverstripe/userforms": "*"
+        "silverstripe/framework": "^5",
+        "silverstripe/userforms": "^6"
     },
     "extra": {
         "expose": [
